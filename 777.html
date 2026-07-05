@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Telegram 纸飞机账号 · 官网</title>
+    <!-- Font Awesome 5 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding: 16px 12px 40px;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 420px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px 28px 16px 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            padding: 16px 16px 20px;
+            position: relative;
+        }
+
+        /* ----- 顶部导航 / 标题栏 ----- */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .top-bar .logo {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.3px;
+            color: #1f2a3a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-bar .logo i {
+            color: #2a7de1;
+            font-size: 22px;
+        }
+
+        .top-bar .badge {
+            background: #eef3fc;
+            color: #1f5f9e;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        /* ----- 免责声明 + 公告 (仿原图) ----- */
+        .notice-strip {
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 10px 14px;
+            margin: 14px 0 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 12px;
+            border: 1px solid #e9edf4;
+            font-size: 13px;
+        }
+
+        .notice-strip .disclaimer {
+            color: #6b7a8f;
+            font-weight: 500;
+        }
+
+        .notice-strip .system-msg {
+            color: #1a2b3e;
+            background: #eaf1fe;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .notice-strip .system-msg i {
+            margin-right: 6px;
+            color: #2a7de1;
+        }
+
+        /* ----- 分类标签 (导航胶囊) ----- */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 8px;
+            margin: 12px 0 16px;
+        }
+
+        .category-tabs span {
+            background: #f2f4f8;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1f2a3a;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: 0.15s;
+        }
+
+        .category-tabs span i {
+            font-size: 13px;
+            color: #5a6b7e;
+        }
+
+        .category-tabs .highlight {
+            background: #1f2a3a;
+            color: white;
+        }
+        .category-tabs .highlight i {
+            color: white;
+        }
+
+        /* ----- 三个国旗卡片 (核心) ----- */
+        .flag-card-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin: 18px 0 24px;
+        }
+
+        .flag-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 14px 18px 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eaedf3;
+            transition: all 0.15s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .flag-card:active {
+            background: #f8faff;
+            border-color: #b7c6dd;
+            transform: scale(0.99);
+        }
+
+        .flag-card-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* 圆形国旗 + 外圈 (仿图片中的圆圈) */
+        .flag-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #f0f2f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            flex-shrink: 0;
+            border: 2px solid #dce1ea;
+            transition: 0.1s;
+        }
+
+        .flag-circle img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .flag-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flag-name {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.2px;
+            color: #0b1a2b;
+        }
+
+        .flag-sub {
+            font-size: 13px;
+            color: #6b7d94;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .flag-sub i {
+            font-size: 12px;
+            color: #8899b0;
+        }
+
+        .flag-price-tag {
+            background: #f0f4fe;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #1f5f9e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .flag-price-tag i {
+            font-size: 13px;
+            color: #2a7de1;
+        }
+
+        /* 小标签 (免费/库存) */
+        .free-badge {
+            background: #e6f7e6;
+            color: #1b7e3f;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 40px;
+            margin-left: 6px;
+        }
+
+        /* ----- 商品推荐 / 每日福利 (仿原图下半部分) ----- */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 22px 0 10px;
+        }
+
+        .section-title h4 {
+            font-weight: 700;
+            font-size: 17px;
+            color: #0b1a2b;
+        }
+
+        .section-title a {
+            font-size: 13px;
+            color: #2a7de1;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .product-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafbfd;
+            border-radius: 18px;
+            padding: 10px 14px 10px 16px;
+            border: 1px solid #edf0f6;
+        }
+
+        .product-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .product-name {
+            font-weight: 600;
+            font-size: 15px;
+            color: #0f1e30;
+        }
+
+        .product-name small {
+            font-weight: 400;
+            font-size: 12px;
+            color: #6f7f94;
+            margin-left: 6px;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            color: #607080;
+        }
+
+        .product-meta i {
+            margin-right: 3px;
+            color: #889bb0;
+        }
+
+        .product-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: #0b1a2b;
+            font-size: 16px;
+        }
+
+        .btn-buy {
+            background: #eef3fc;
+            padding: 5px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1f5f9e;
+            border: none;
+            cursor: default;
+        }
+
+        .btn-buy.free {
+            background: #e1f0e8;
+            color: #0f6d3b;
+        }
+
+        /* ----- 底部导航 (仿图) ----- */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 28px;
+            padding-top: 14px;
+            border-top: 1px solid #eef1f7;
+        }
+
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #7b8a9e;
+            font-size: 11px;
+            font-weight: 500;
+            gap: 4px;
+            transition: 0.1s;
+        }
+
+        .bottom-nav .nav-item i {
+            font-size: 20px;
+            color: #6f7f94;
+        }
+
+        .bottom-nav .nav-item.active i {
+            color: #1f5f9e;
+        }
+
+        .bottom-nav .nav-item.active {
+            color: #1f2a3a;
+        }
+
+        /* 小屏微调 */
+        @media (max-width: 400px) {
+            .flag-circle {
+                width: 48px;
+                height: 48px;
+            }
+            .flag-circle img {
+                width: 38px;
+                height: 38px;
+            }
+            .flag-name {
+                font-size: 16px;
+            }
+        }
+
+        /* 辅助 */
+        .text-muted {
+            color: #7e8fa5;
+        }
+        .mt-1 { margin-top: 4px; }
+        .mb-1 { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <!-- 顶部 -->
+    <div class="top-bar">
+        <div class="logo">
+            <i class="fab fa-telegram-plane"></i> 纸飞机·号
+        </div>
+        <div class="badge">Ta商城</div>
+    </div>
+
+    <!-- 免责声明 + 公告 -->
+    <div class="notice-strip">
+        <span class="disclaimer"><i class="fas fa-shield-alt" style="margin-right: 5px;"></i>免责声明</span>
+        <span class="system-msg"><i class="fas fa-bullhorn"></i> 全年无休 · 全天自动处理</span>
+    </div>
+
+    <!-- 分类导航 (仿原图) -->
+    <div class="category-tabs">
+        <span class="highlight"><i class="fas fa-crown"></i> 免</span>
+        <span><i class="fas fa-gem"></i> 福利区</span>
+        <span><i class="fas fa-bolt"></i> 快手</span>
+        <span><i class="fab fa-weixin"></i> VX视频号</span>
+        <span><i class="fas fa-hashtag"></i> 小红薯</span>
+        <span><i class="fas fa-handshake"></i> 拼多多</span>
+        <span><i class="fas fa-star"></i> QQ名片</span>
+        <span><i class="fas fa-crown"></i> QQ钻</span>
+        <span><i class="fas fa-gift"></i> 红包</span>
+    </div>
+
+    <!-- 三个国旗卡片 (核心需求) -->
+    <div class="flag-card-grid">
+        <!-- 1. 美国号 -> 跳转 https://fkli.cc/cVV -->
+        <a href="https://fkli.cc/cVV" target="_blank" class="flag-card" rel="noopener noreferrer">
+            <div class="flag-card-left">
+                <div class="flag-circle">
+                    <img src="https://flagcdn.com/w80/us.png" alt="美国国旗" width="44" height="44">
+                </div>
+                <div class="flag-info">
+                    <div class="flag-name">美国号 <span style="font-weight:400; font-size:14px; color:#4a5c72;">#1</span></div>
+                    <div class="flag-sub"><i class="fas fa-check-circle" style="color:#1f9e5a;"></i> 稳定 · 秒发</div>
+                </div>
+            </div>
+            <div class="flag-price-tag">
+                <i class="fas fa-tag"></i> ￥0.00 <span class="free-badge">免费领</span>
+            </div>
+        </a>
+
+        <!-- 2. 英国号 (国旗英国) -->
+        <a href="#" class="flag-card" onclick="alert('英国号 · 即将上架'); return false;">
+            <div class="flag-card-left">
+                <div class="flag-circle">
+                    <img src="https://flagcdn.com/w80/gb.png" alt="英国国旗" width="44" height="44">
+                </div>
+                <div class="flag-info">
+                    <div class="flag-name">英国号 <span style="font-weight:400; font-size:14px; color:#4a5c72;">#2</span></div>
+                    <div class="flag-sub"><i class="fas fa-clock"></i> 即将补货</div>
+                </div>
+            </div>
+            <div class="flag-price-tag" style="background:#f4f6fa; color:#3f526a;">
+                <i class="fas fa-hourglass-half"></i> 敬请期待
+            </div>
+        </a>
+
+        <!-- 3. 美国号2 (再次美国国旗) -->
+        <a href="#" class="flag-card" onclick="alert('美国号2 · 可购买 (演示)'); return false;">
+            <div class="flag-card-left">
+                <div class="flag-circle">
+                    <img src="https://flagcdn.com/w80/us.png" alt="美国国旗" width="44" height="44">
+                </div>
+                <div class="flag-info">
+                    <div class="flag-name">美国号 <span style="font-weight:400; font-size:14px; color:#4a5c72;">#2</span></div>
+                    <div class="flag-sub"><i class="fas fa-bolt" style="color:#f5a623;"></i> 高质 · 秒单</div>
+                </div>
+            </div>
+            <div class="flag-price-tag">
+                <i class="fas fa-coins"></i> ￥1.74 <span class="free-badge" style="background:#dde9fc; color:#1f5f9e;">热卖</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- 每日福利 + 商品推荐 (模仿原图下半部分) -->
+    <div class="section-title">
+        <h4><i class="fas fa-gift" style="color:#e67e22; margin-right: 6px;"></i>每日福利放送</h4>
+        <a href="#">查看全部 <i class="fas fa-chevron-right" style="font-size:10px;"></i></a>
+    </div>
+
+    <div class="product-row">
+        <div class="product-item">
+            <div class="product-left">
+                <div class="product-name"><i class="far fa-heart" style="color:#e05a5a;"></i> 【小】免费作品点赞10个 <small>· 品质优选</small></div>
+                <div class="product-meta"><i class="fas fa-clock"></i> 库存充足 · 每日限领</div>
+            </div>
+            <div class="product-right">
+                <span class="product-price">￥0.00</span>
+                <span class="btn-buy free">免费领取</span>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-left">
+                <div class="product-name"><i class="fas fa-bolt" style="color:#f5a623;"></i> 【小】秒单作品点赞100个 <small>· 效率在线</small></div>
+                <div class="product-meta"><i class="fas fa-check-circle" style="color:#1f9e5a;"></i> 热门必备</div>
+            </div>
+            <div class="product-right">
+                <span class="product-price">￥1.74</span>
+                <span class="btn-buy">购买</span>
+            </div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-left">
+                <div class="product-name"><i class="fas fa-fire" style="color:#d35400;"></i> 【小】秒单作品点赞1千个 <small>· 千川投流</small></div>
+                <div class="product-meta"><i class="fas fa-trophy"></i> 热门 · 极速</div>
+            </div>
+            <div class="product-right">
+                <span class="product-price">￥1.74</span>
+                <span class="btn-buy">购买</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 (完全仿图) -->
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>查询</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-th-large"></i>
+            <span>更多</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-headset"></i>
+            <span>客服</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>用户中心</span>
+        </div>
+    </div>
+
+    <!-- 商品推荐 (底部标签) 仿原图 -->
+    <div style="margin-top: 16px; display: flex; justify-content: center; gap: 10px; font-size: 12px; color: #8a9bb0; border-top: 1px solid #f0f2f7; padding-top: 14px;">
+        <span><i class="fas fa-circle" style="color: #2a7de1; font-size: 8px;"></i> 全部</span>
+        <span><i class="fas fa-circle" style="color: #6b7f94; font-size: 8px;"></i> 热门套餐</span>
+        <span><i class="fas fa-circle" style="color: #6b7f94; font-size: 8px;"></i> 粉丝</span>
+        <span><i class="fas fa-circle" style="color: #6b7f94; font-size: 8px;"></i> 千川投流粉</span>
+    </div>
+</div>
+</body>
+</html>
